@@ -41,7 +41,8 @@ Bundle "scrooloose/nerdtree"
 " ctrlp- fuzzy file finder
 Bundle "kien/ctrlp.vim"
 " ctrlp- fuzzy file finder
-Bundle "ervandew/supertab"
+Bundle 'ervandew/supertab'
+" Bundle 'Valloric/YouCompleteMe'
 " syntastic - Syntax checking hacks for vim
 Bundle 'scrooloose/syntastic'
 " multiple cursors - true Sublime Text style multiple selections for Vim
@@ -72,6 +73,8 @@ Bundle 'vim-scripts/proton'
 Bundle 'flazz/vim-colorschemes'
 " xterm16 - good old scheme
 Bundle 'vim-scripts/xterm16.vim'
+" xterm16 - good old scheme
+Bundle 'davidhalter/jedi-vim'
 filetype plugin indent on     " required
 " *** END VUNDLE SETUP ***
 
@@ -110,21 +113,24 @@ set shiftwidth=4
 set expandtab
 set smartindent
 set nowrap
-
-
+" set paste
 
 " colorscheme settings
 syntax enable
 " required for solarized terminal
 " set t_Co=16
 set t_Co=256
-set background=light
-colorscheme Tomorrow-Night
+set background=dark
+colorscheme github
+" colorscheme Tomorrow-Night
+" colorscheme solarized
+" highlight ColorColumn ctermbg=8
 " highlight Normal ctermbg=NONE
 " highlight nonText ctermbg=NONE
 
 set colorcolumn=80
-" highlight ColorColumn ctermbg=0
+" highlight ColorColumn ctermbg=235
+execute "set colorcolumn=" . join(range(81,335), ',')
 set hls
 ""set ignorecase
 
@@ -173,14 +179,19 @@ autocmd FileType css set omnifunc=xmlcomplete#CompleteTags noci
 :nmap <silent> <C-k> :wincmd k<CR>
 :nmap <silent> <C-l> :wincmd l<CR>
 
-" Switch to alternate file
-map <C-Tab> :bnext<cr>
-map <C-S-Tab> :bprevious<cr>
+" Move to the previous buffer with "gp"
+nnoremap gp :bp<CR>
+" Move to the next buffer with "gn"
+nnoremap gn :bn<CR>
+" List all possible buffers with "gl"
+nnoremap gl :ls<CR>
+" List all possible buffers with "gb" and accept a new buffer argument [1]
+nnoremap gb :ls<CR>:b
 
-" tabnew abbrev
-ca tn tabnew
-ca th tabp
-ca tl tabn
+" " tabnew abbrev
+" ca tn tabnew
+" ca th tabp
+" ca tl tabn
 
 " IndentLine plugin settings
 let g:indentLine_char = '|'
@@ -208,14 +219,16 @@ let Tlist_WinWidth = 50
 let g:tagbar_width = 50
 
 " Latex compile
-" map <silent> <F2> :<Esc>:w<CR>:!clear<CR>:!pdflatex % <CR>:!evince consol.pdf 2>/dev/null &<CR>: <Ins> <CR>
+map <silent> <F2> :<Esc>:w<CR>:!clear<CR>:!xelatex % <CR>:!evince main.pdf 2>/dev/null &<CR>: <Ins> <CR>
 
 " vmap <expr>  ++  VMATH_YankAndAnalyse()
 " nmap         ++  vip++ 
 
 " auto start NERDTree on opening vim
 " autocmd vimenter * NERDTree
-map <F12> :NERDTreeToggle<CR>
+map <F8> :NERDTreeToggle<CR>
+" taglist toggle
+nnoremap <F9> :TlistToggle<CR>
 
 " remapping shift tab so that ctrl-d mapping can be used
 let g:SuperTabMappingBackward = "<C-Tab>"
@@ -230,3 +243,4 @@ let g:syntastic_enable_signs = 1
 let g:syntastic_auto_loc_list=1
 let g:syntastic_check_on_open = 1
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -Wall'
+let g:syntastic_javascript_checkers = ['jshint']
