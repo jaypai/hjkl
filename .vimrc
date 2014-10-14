@@ -1,82 +1,39 @@
-" *** START VUNDLE SETUP ***
-set nocompatible              " be iMproved, required
-filetype off                  " required
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-Bundle 'gmarik/vundle'
-" snipmate - snippet completion
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
-Bundle "honza/vim-snippets"
-" autoComplPop - buffer completion
-" Bundle 'dirkwallenstein/vim-autocomplpop'
-" Bundle 'vim-scripts/L9'
-" autoclose - braces and <", '> completion
-Bundle "vim-scripts/AutoClose"
-" csapprox - fixes terminal colorscheme
-Bundle 'vim-scripts/CSApprox'
-" surround - surrounds anything with tags and braces
-Bundle "tpope/vim-surround"
-" repeat - repeats anything with dot(.)|
-Bundle "tpope/vim-repeat"
-" fugitive - best Git wrapper of all time.
-Bundle "tpope/vim-fugitive"
-" indentLine - draws indent |
-Bundle "Yggdroot/indentLine"
-" lightline - status/ tab line
-Bundle "itchyny/lightline.vim"
-" emmet - new zen coding
-Bundle "mattn/emmet-vim"
-" MatchTag - html/similar matching tag highlight
-Bundle "gregsexton/MatchTag"
-" tComment - comment multiple lines quickly
-Bundle "vim-scripts/tComment"
-" taglist - displays various tags used in source code
-Bundle "vim-scripts/taglist.vim"
-" tagbar - browse the tags of source code files.
-Bundle "majutsushi/tagbar"
-" nerdtree - advanced file explorer
-Bundle "scrooloose/nerdtree"
-" ctrlp- fuzzy file finder
-Bundle "kien/ctrlp.vim"
-" ctrlp- fuzzy file finder
-Bundle 'ervandew/supertab'
-" Bundle 'Valloric/YouCompleteMe'
-" syntastic - Syntax checking hacks for vim
-Bundle 'scrooloose/syntastic'
-" multiple cursors - true Sublime Text style multiple selections for Vim
-Bundle 'terryma/vim-multiple-cursors'
-" browser - a lightweight web browser
-Bundle 'Chronial/browser.vim'
-" cssColor - css color display
-Bundle 'ap/vim-css-color'
-" jellybean - color scheme
-Bundle 'nanotech/jellybeans.vim'
-" monokai - color scheme
-Bundle 'sickill/vim-monokai'
-" solarized - best colorscheme 
-Bundle "altercation/vim-colors-solarized"
-" zenburn - calm colorscheme 
-Bundle "jnurmine/Zenburn"
-" seoul256 - low-contrast Vim color scheme
-Bundle "junegunn/seoul256.vim"
-" tommorrow theme - a bright theme with pastel colours
-Bundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
-" neverness - A dark colour scheme 
-Bundle 'vim-scripts/Neverness-colour-scheme'
-" pyte - A light colour scheme 
-Bundle 'vim-scripts/pyte'
-" neverness - A light colour scheme 
-Bundle 'vim-scripts/proton'
-" neverness - A light colour scheme 
-Bundle 'flazz/vim-colorschemes'
-" xterm16 - good old scheme
-Bundle 'vim-scripts/xterm16.vim'
-" xterm16 - good old scheme
-Bundle 'davidhalter/jedi-vim'
-filetype plugin indent on     " required
-" *** END VUNDLE SETUP ***
+" *** START PLUG SETUP ***
+call plug#begin('~/.vim/plugged')
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
+Plug 'honza/vim-snippets'
+Plug 'vim-scripts/AutoClose'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-fugitive'
+Plug 'Yggdroot/indentLine'
+" Plug 'itchyny/lightline.vim'
+Plug 'mattn/emmet-vim'
+Plug 'gregsexton/MatchTag'
+Plug 'vim-scripts/tComment'
+Plug 'vim-scripts/taglist.vim'
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'
+Plug 'kien/ctrlp.vim'
+Plug 'ervandew/supertab'
+Plug 'scrooloose/syntastic'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'Chronial/browser.vim'
+Plug 'ap/vim-css-color'
+Plug 'flazz/vim-colorschemes'
+Plug 'vim-scripts/xterm16.vim'
+Plug 'junegunn/vim-easy-align'
+" Plug 'vim-scripts/CSApprox'
+Plug 'whatyouhide/vim-gotham'
+" Plug 'davidhalter/jedi-vim'
+" Plug 'dirkwallenstein/vim-autocomplpop'
+" Plug 'vim-scripts/L9'
+Plug 'antoyo/vim-licenses'
+Plug 'nice/sweater'
+call plug#end()
+" *** END PLUG SETUP ***
 
 " settings for GNU Screen
 set nocompatible
@@ -121,8 +78,14 @@ syntax enable
 " set t_Co=16
 set t_Co=256
 set background=dark
-colorscheme github
-" colorscheme Tomorrow-Night
+if has("gui_running")
+    colorscheme sweater
+    set guioptions-=m  "menu bar
+    set guioptions-=T  "toolbar
+    set guioptions-=r  "scrollbar
+else
+    colorscheme sweater
+endif
 " colorscheme solarized
 " highlight ColorColumn ctermbg=8
 " highlight Normal ctermbg=NONE
@@ -206,8 +169,6 @@ let html_no_rendering=1
 " django variable dump issue
 imap {{ {{}}<Esc>hi
 
-"autocmd vimenter * Opsplore
-
 " Tab completion for emmet.vim
 " imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
@@ -220,9 +181,6 @@ let g:tagbar_width = 50
 
 " Latex compile
 map <silent> <F2> :<Esc>:w<CR>:!clear<CR>:!xelatex % <CR>:!evince main.pdf 2>/dev/null &<CR>: <Ins> <CR>
-
-" vmap <expr>  ++  VMATH_YankAndAnalyse()
-" nmap         ++  vip++ 
 
 " auto start NERDTree on opening vim
 " autocmd vimenter * NERDTree
@@ -244,3 +202,16 @@ let g:syntastic_auto_loc_list=1
 let g:syntastic_check_on_open = 1
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -Wall'
 let g:syntastic_javascript_checkers = ['jshint']
+
+" save folding on exit
+set viewoptions-=options
+augroup vimrc
+    autocmd BufWritePost *
+    \   if expand('%') != '' && &buftype !~ 'nofile'
+    \|      mkview
+    \|  endif
+    autocmd BufRead *
+    \   if expand('%') != '' && &buftype !~ 'nofile'
+    \|      silent loadview
+    \|  endif
+augroup END
