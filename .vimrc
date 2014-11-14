@@ -9,7 +9,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
-" Plug 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'
 Plug 'mattn/emmet-vim'
 Plug 'gregsexton/MatchTag'
 Plug 'vim-scripts/tComment'
@@ -22,16 +22,15 @@ Plug 'scrooloose/syntastic'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'Chronial/browser.vim'
 Plug 'ap/vim-css-color'
-Plug 'flazz/vim-colorschemes'
-Plug 'vim-scripts/xterm16.vim'
 Plug 'junegunn/vim-easy-align'
-" Plug 'vim-scripts/CSApprox'
-Plug 'whatyouhide/vim-gotham'
+Plug 'antoyo/vim-licenses'
+Plug 'gorkunov/smartpairs.vim'
+Plug 'nice/sweater'
+Plug 'sickill/vim-sunburst'
 " Plug 'davidhalter/jedi-vim'
 " Plug 'dirkwallenstein/vim-autocomplpop'
 " Plug 'vim-scripts/L9'
-Plug 'antoyo/vim-licenses'
-Plug 'nice/sweater'
+" Plug 'vim-scripts/CSApprox'
 call plug#end()
 " *** END PLUG SETUP ***
 
@@ -84,7 +83,7 @@ if has("gui_running")
     set guioptions-=T  "toolbar
     set guioptions-=r  "scrollbar
 else
-    colorscheme sweater
+    colorscheme Sunburst
 endif
 " colorscheme solarized
 " highlight ColorColumn ctermbg=8
