@@ -8,11 +8,10 @@ Plug 'vim-scripts/AutoClose'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
-Plug 'Yggdroot/indentLine'
-Plug 'itchyny/lightline.vim'
 Plug 'mattn/emmet-vim'
 Plug 'gregsexton/MatchTag'
 Plug 'vim-scripts/tComment'
+Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/taglist.vim'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
@@ -21,16 +20,27 @@ Plug 'ervandew/supertab'
 Plug 'scrooloose/syntastic'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'Chronial/browser.vim'
-Plug 'ap/vim-css-color'
 Plug 'junegunn/vim-easy-align'
 Plug 'antoyo/vim-licenses'
 Plug 'gorkunov/smartpairs.vim'
 Plug 'nice/sweater'
 Plug 'sickill/vim-sunburst'
-" Plug 'davidhalter/jedi-vim'
+Plug 'vim-scripts/Railscasts-Theme-GUIand256color'
+Plug 'bling/vim-airline'
+Plug 'kshenoy/vim-signature'
+Plug 'bronson/vim-visual-star-search'
+Plug 'davidhalter/jedi-vim'
+Plug 'Yggdroot/indentLine'
+Plug 'glidenote/memolist.vim'
+Plug 'benjaminwhite/Benokai'
+Plug 'quanganhdo/grb256'
+Plug 'airblade/vim-gitgutter'
+" Plug 'ehamberg/vim-cute-python'
 " Plug 'dirkwallenstein/vim-autocomplpop'
 " Plug 'vim-scripts/L9'
 " Plug 'vim-scripts/CSApprox'
+" Plug 'itchyny/lightline.vim'
+" Plug 'skammer/vim-css-color'
 call plug#end()
 " *** END PLUG SETUP ***
 
@@ -40,28 +50,6 @@ imap <Esc>[A <Up>
 imap <Esc>[B <Down> 
 imap <Esc>[C <Right>
 imap <Esc>[D <Left>
-
-" lightline settings
-set encoding=utf8
-set termencoding=utf8
-set laststatus=2
-let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component': {
-      \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
-      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
-      \ },
-      \ 'component_visible_condition': {
-      \   'readonly': '(&filetype!="help"&& &readonly)',
-      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
-      \ },
-      \ }
 
 " basic settings
 set tabstop=4
@@ -75,25 +63,27 @@ set nowrap
 syntax enable
 " required for solarized terminal
 " set t_Co=16
-set t_Co=256
 set background=dark
 if has("gui_running")
-    colorscheme sweater
+    colorscheme Benokai
+    let g:rehash256 = 1
     set guioptions-=m  "menu bar
     set guioptions-=T  "toolbar
     set guioptions-=r  "scrollbar
+    set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 10
 else
-    colorscheme Sunburst
+    set t_Co=256
+    colorscheme Benokai
 endif
 " colorscheme solarized
 " highlight ColorColumn ctermbg=8
 " highlight Normal ctermbg=NONE
 " highlight nonText ctermbg=NONE
 
-set colorcolumn=80
-" highlight ColorColumn ctermbg=235
-execute "set colorcolumn=" . join(range(81,335), ',')
 set hls
+" set colorcolumn=80
+" highlight ColorColumn ctermbg=235
+" execute "set colorcolumn=" . join(range(81,335), ',')
 ""set ignorecase
 
 " Transparent background
@@ -122,12 +112,17 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " Gvim terminal Cursor Block
 set guicursor=n-v-c:block-Cursor
-set guicursor+=i:block-Cursor
+" set guicursor+=i:block-Cursor
 
 " Gvim pasting from external buffer
 nmap <C-V> "+gP
 imap <C-V> <ESC><C-V>i
 vmap <C-C> "+y
+
+" copy/paste from system buffer
+nmap <Leader>gy "+y
+vmap <Leader>gy "+y
+nmap <Leader>gp "+p
 
 " AutoCompletePop BugFix
 autocmd FileType py set omnifunc=xmlcomplete#CompleteTags noci
@@ -156,7 +151,9 @@ nnoremap gb :ls<CR>:b
 " ca tl tabn
 
 " IndentLine plugin settings
-let g:indentLine_char = '|'
+" let g:indentLine_char = '︙'
+let g:indentLine_char = '⎸'
+let g:indentLine_color_term = 239
 
 " Fix of . bug of AutoCompletePop
 filetype on
@@ -201,6 +198,9 @@ let g:syntastic_auto_loc_list=1
 let g:syntastic_check_on_open = 1
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -Wall'
 let g:syntastic_javascript_checkers = ['jshint']
+" let g:syntastic_python_checkers = ['pyflakes']
+" use :Errors and :lclose
+let g:syntastic_auto_loc_list = 0 
 
 " save folding on exit
 set viewoptions-=options
@@ -214,3 +214,33 @@ augroup vimrc
     \|      silent loadview
     \|  endif
 augroup END
+
+" Airline settings
+let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='hybrid'
+set laststatus=2
+set ttimeoutlen=50
+
+" Fugitive settings
+set diffopt+=vertical
+
+" Jedi settings
+let g:pymode_rope = 0
+
+" Gnome-Terminal
+if !exists("vimrc_autocommands_cursor_loaded")
+  let vimrc_autocommands_cursor_loaded = 1
+  if has("autocmd")
+    if executable("gconftool-2")
+      au VimEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+      au InsertEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
+      au InsertLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+      au VimLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
+    endif
+  endif
+endif
+
+" ctrlp settings
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
