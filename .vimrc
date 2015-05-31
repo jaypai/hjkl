@@ -56,7 +56,7 @@ call plug#end()
 " *** END PLUG SETUP ***
 
 
-" settings for GNU Screen
+" *** SETTINGS FOR GNU SCREEN ***
 set nocompatible
 imap <Esc>[A <Up>
 imap <Esc>[B <Down>
@@ -64,51 +64,61 @@ imap <Esc>[C <Right>
 imap <Esc>[D <Left>
 
 
-" basic settings
+" *** BASIC SETTINGS ***
+set hls
 set tabstop=4
 set shiftwidth=4
 set expandtab
 set smartindent
 set nowrap
+filetype on
+filetype plugin on
 " set paste
+" set ignorecase
 
 
-" colorscheme settings
+" *** COLORSCHEME SETTINGS ***
 syntax enable
 " required for solarized terminal
 " set t_Co=16
+" colorscheme solarized
 set background=dark
 if has("gui_running")
     colorscheme luna
+    set ghr=0
     set guioptions-=m  "menu bar
     set guioptions-=T  "toolbar
     set guioptions-=r  "scrollbar
     set guioptions-=L  "scrollbar
+
+    " Gvim fonts
     " set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 10
     set guifont=Inconsolata-g\ for\ Powerline\ Medium\ 11
+
+    " Gvim terminal Cursor Block
+    set guicursor=n-v-c:block-Cursor
+    " set guicursor+=i:block-Cursor
+
+    " Gvim pasting from external buffer
+    nmap <C-V> "+gP
+    imap <C-V> <ESC><C-V>i
+    vmap <C-C> "+y
 else
     set t_Co=256
     colorscheme luna-term
 endif
-" colorscheme solarized
+" ### Misc Settings ###
 " highlight ColorColumn ctermbg=8
 " highlight Normal ctermbg=NONE
 " highlight nonText ctermbg=NONE
-
-
-set hls
-set ghr=0
+" Transparent background
+" hi Normal ctermfg=252 ctermbg=none
 set colorcolumn=80
 highlight ColorColumn ctermbg=235
 " execute "set colorcolumn=" . join(range(81,335), ',')
-""set ignorecase
 
 
-" Transparent background
-" hi Normal          ctermfg=252 ctermbg=none
-
-
-" SHIFT + TAB
+" *** SHIFT + TAB SETTINGS ***
 " for command mode
 nmap <S-Tab> <<
 " for insert mode
@@ -117,10 +127,6 @@ imap <S-Tab> <C-d>
 " for block mode / Visual block move
 vmap <Tab> >gv
 vmap <S-Tab> <gv
-
-
-"<Esc> and <C-O> lag fix
-"set timeout timeoutlen=0 ttimeoutlen=0
 
 
 " Move lines and blocks up/down
@@ -132,37 +138,20 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
 
-" Gvim terminal Cursor Block
-set guicursor=n-v-c:block-Cursor
-" set guicursor+=i:block-Cursor
-
-
-" Gvim pasting from external buffer
-nmap <C-V> "+gP
-imap <C-V> <ESC><C-V>i
-vmap <C-C> "+y
-
-
 " copy/paste from system buffer
 nmap <Leader>gy "+y
 vmap <Leader>gy "+y
 nmap <Leader>gp "+p
 
 
-" AutoCompletePop BugFix
-autocmd FileType py set omnifunc=xmlcomplete#CompleteTags noci
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags noci
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags noci
-autocmd FileType css set omnifunc=xmlcomplete#CompleteTags noci
-
-
-" Split Window Navigation
+" *** SPLIT WINDOW NAVIGATION ***
 :nmap <silent> <C-h> :wincmd h<CR>
 :nmap <silent> <C-j> :wincmd j<CR>
 :nmap <silent> <C-k> :wincmd k<CR>
 :nmap <silent> <C-l> :wincmd l<CR>
 
 
+" *** BUFFER NAVIGATION ***
 " Move to the previous buffer with "gp"
 nnoremap gp :bp<CR>
 " Move to the next buffer with "gn"
@@ -173,69 +162,46 @@ nnoremap gl :ls<CR>
 nnoremap gb :ls<CR>:b
 
 
-" " tabnew abbrev
-" ca tn tabnew
-" ca th tabp
-" ca tl tabn
-
-
-" IndentLine plugin settings
+" *** INDENTLINE PLUGIN SETTINGS ***
 " let g:indentLine_char = '︙'
 let g:indentLine_char = '⎸'
 let g:indentLine_color_term = 239
 
 
-" Fix of . bug of AutoCompletePop
-filetype on
-filetype plugin on
-
-
-" Fix themes putting underline for href's
-let html_no_rendering=1
-
-
-" django variable dump issue
-imap {{ {{}}<Esc>hi
-
-
-" Tab completion for emmet.vim
-" imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-
-
+" *** TAGLIST SETTINGS ***
 " taglist on the right hand side
-let Tlist_Use_Right_Window   = 1
+let Tlist_Use_Right_Window = 1
 let Tlist_WinWidth = 50
+" taglist toggle
+nnoremap <F9> :TlistToggle<CR>
 
 
-" tagbar settings
+" *** TAGBAR SETTINGS ***
 let g:tagbar_width = 50
 
 
-" Latex compile
-map <silent> <F2> :<Esc>:w<CR>:!clear<CR>:!xelatex % <CR>:!evince main.pdf 2>/dev/null &<CR>: <Ins> <CR>
-
-
+" *** NERDTREE SETTINGS ***
 " auto start NERDTree on opening vim
 " autocmd vimenter * NERDTree
 let g:NERDTreeWinSize=30
 " let g:NERDTreeWinPos = "right"
 map <F8> :NERDTreeToggle<CR>
-" taglist toggle
-nnoremap <F9> :TlistToggle<CR>
 let g:nerdtree_tabs_open_on_gui_startup=0
 
 
+" *** SUPERTAB SETTINGS ***
 " remapping shift tab so that ctrl-d mapping can be used
 let g:SuperTabMappingBackward = "<C-Tab>"
 " SuperTab commpletion up to down
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 
+" *** SNIPMATE SETTINGS ***
 " snipmate initial trigger
 imap <C-i> <Plug>snipMateNextOrTrigger
 
 
-" syntastic config
+" *** SYNTASTIC CONFIG ***
 let g:syntastic_enable_signs = 1
 let g:syntastic_auto_loc_list=1
 let g:syntastic_check_on_open = 1
@@ -246,6 +212,7 @@ let g:syntastic_python_checkers = ['pyflakes']
 " let g:syntastic_auto_loc_list = 0
 
 
+" *** VIM FOLDING SETTINGS ***
 " save folding on exit
 set viewoptions-=options
 augroup vimrc
@@ -260,7 +227,7 @@ augroup vimrc
 augroup END
 
 
-" Airline settings
+" *** AIRLINE SETTINGS ***
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='luna'
@@ -268,12 +235,66 @@ set laststatus=2
 set ttimeoutlen=50
 
 
-" Fugitive settings
+" *** FUGITIVE SETTINGS ***
 set diffopt+=vertical
 
 
-" Jedi settings
+" *** JEDI SETTINGS ***
 let g:pymode_rope = 0
+
+
+" *** CTRL-P SETTINGS ***
+" let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+" let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+
+
+" *** GIT GUTTER SETTINGS ***
+nmap ]h <Plug>GitGutterNextHunk
+nmap [h <Plug>GitGutterPrevHunk
+nmap <Leader>hs <Plug>GitGutterStageHunk
+nmap <Leader>hr <Plug>GitGutterRevertHunk
+
+
+" *** SMOOTH SCROLL SETTINGS ***
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
+
+" *** BIG LIST OF FIXES ***
+"<Esc> and <C-O> lag fix
+"set timeout timeoutlen=0 ttimeoutlen=0
+
+" AutoCompletePop BugFix
+autocmd FileType python set omnifunc=xmlcomplete#CompleteTags noci
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags noci
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags noci
+autocmd FileType css set omnifunc=xmlcomplete#CompleteTags noci
+
+
+" Fix themes putting underline for href's
+let html_no_rendering=1
+
+" django variable dump issue
+imap {{ {{}}<Esc>hi
+
+
+" *** PAST -- PRESENT -- FUTURE ***
+" " tabnew abbrev
+" ca tn tabnew
+" ca th tabp
+" ca tl tabn
+
+
+" *** EMMET SETTINGS ***
+" Tab completion for emmet.vim
+" imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+
+
+" Latex compile
+" map <silent> <F2> :<Esc>:w<CR>:!clear<CR>:!xelatex % <CR>:!evince main.pdf 2>/dev/null &<CR>: <Ins> <CR>
 
 
 " " Gnome-Terminal
@@ -290,27 +311,6 @@ let g:pymode_rope = 0
 " endif
 
 
-" Konsole
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-
-
-" Ctrl-p settings
-" let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-" let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
-
-
-" Git gutter settings
-nmap ]h <Plug>GitGutterNextHunk
-nmap [h <Plug>GitGutterPrevHunk
-nmap <Leader>hs <Plug>GitGutterStageHunk
-nmap <Leader>hr <Plug>GitGutterRevertHunk
-
-
-" Smooth Scroll Settings
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-
+" " Konsole
+" let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+" let &t_EI = "\<Esc>]50;CursorShape=0\x7"
