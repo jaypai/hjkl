@@ -56,25 +56,51 @@ call plug#end()
 " *** END PLUG SETUP ***
 
 
-" *** SETTINGS FOR GNU SCREEN ***
+" *** BASIC SETTINGS ***
+filetype off
+filetype plugin indent on
+set hls
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set smartindent
+set nowrap
 set nocompatible
+set modelines=0
+
+" extra settings
+set encoding=utf-8
+set scrolloff=3
+set autoindent
+set showmode
+set showcmd
+set hidden
+set wildmenu
+set wildmode=list:longest
+set ruler
+set backspace=indent,eol,start
+set laststatus=2
+set undofile
+
+" speedup Vim
+set synmaxcol=200
+set ttyfast " u got a fast terminal
+set ttyscroll=3
+set lazyredraw " to avoid scrolling problems
+set re=1 " use older version of regex engine
+" set paste
+" set ignorecase
+" set visualbell
+" set relativenumber
+" set cursorline
+
+
+" *** SETTINGS FOR GNU SCREEN ***
 imap <Esc>[A <Up>
 imap <Esc>[B <Down>
 imap <Esc>[C <Right>
 imap <Esc>[D <Left>
-
-
-" *** BASIC SETTINGS ***
-set hls
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set smartindent
-set nowrap
-filetype on
-filetype plugin on
-" set paste
-" set ignorecase
 
 
 " *** COLORSCHEME SETTINGS ***
@@ -263,22 +289,22 @@ noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
 
-" *** BIG LIST OF FIXES ***
-"<Esc> and <C-O> lag fix
-"set timeout timeoutlen=0 ttimeoutlen=0
-
-" AutoCompletePop BugFix
-autocmd FileType python set omnifunc=xmlcomplete#CompleteTags noci
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags noci
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags noci
-autocmd FileType css set omnifunc=xmlcomplete#CompleteTags noci
-
+" *** FIXES ***
 
 " Fix themes putting underline for href's
 let html_no_rendering=1
 
 " django variable dump issue
 imap {{ {{}}<Esc>hi
+
+"<Esc> and <C-O> lag fix
+"set timeout timeoutlen=0 ttimeoutlen=0
+
+" AutoCompletePop BugFix
+" autocmd FileType python set omnifunc=xmlcomplete#CompleteTags noci
+" autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags noci
+" autocmd FileType html set omnifunc=htmlcomplete#CompleteTags noci
+" autocmd FileType css set omnifunc=xmlcomplete#CompleteTags noci
 
 
 " *** PAST -- PRESENT -- FUTURE ***
