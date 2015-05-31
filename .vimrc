@@ -4,12 +4,10 @@ Plug 'Chronial/browser.vim'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
-Plug 'ajh17/Spacegray.vim'
 Plug 'antoyo/vim-licenses'
 Plug 'benjaminwhite/Benokai'
 Plug 'bling/vim-airline'
 Plug 'bronson/vim-visual-star-search'
-Plug 'dasch/vim-mocha'
 Plug 'davidhalter/jedi-vim'
 Plug 'ervandew/supertab'
 Plug 'fisadev/vim-isort'
@@ -26,15 +24,12 @@ Plug 'kien/ctrlp.vim'
 Plug 'kshenoy/vim-signature'
 Plug 'majutsushi/tagbar'
 Plug 'mattn/emmet-vim'
-Plug 'nanotech/jellybeans.vim'
 Plug 'nice/sweater'
-Plug 'notpratheek/vim-luna'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'nvie/vim-flake8'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
-Plug 'sickill/vim-sunburst'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'tomtom/tlib_vim'
@@ -42,7 +37,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/AutoClose'
-Plug 'vim-scripts/Railscasts-Theme-GUIand256color'
 Plug 'vim-scripts/tComment'
 Plug 'vim-scripts/taglist.vim'
 
@@ -110,7 +104,7 @@ syntax enable
 " colorscheme solarized
 set background=dark
 if has("gui_running")
-    colorscheme luna
+    colorscheme Benokai
     set ghr=0
     set guioptions-=m  "menu bar
     set guioptions-=T  "toolbar
@@ -131,7 +125,7 @@ if has("gui_running")
     vmap <C-C> "+y
 else
     set t_Co=256
-    colorscheme luna-term
+    colorscheme Benokai
 endif
 " ### Misc Settings ###
 " highlight ColorColumn ctermbg=8
@@ -256,7 +250,7 @@ augroup END
 " *** AIRLINE SETTINGS ***
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='luna'
+let g:airline_theme='zenburn'
 set laststatus=2
 set ttimeoutlen=50
 
