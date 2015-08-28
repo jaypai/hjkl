@@ -38,6 +38,7 @@ Plug 'tpope/vim-surround'
 Plug 'vim-scripts/AutoClose'
 Plug 'vim-scripts/tComment'
 Plug 'vim-scripts/taglist.vim', { 'on':  'TlistToggle' }
+Plug 'atelierbram/vim-colors_atelier-schemes'
 
 " Plug 'dirkwallenstein/vim-autocomplpop'
 " Plug 'ehamberg/vim-cute-python'
@@ -46,6 +47,7 @@ Plug 'vim-scripts/taglist.vim', { 'on':  'TlistToggle' }
 " Plug 'skammer/vim-css-color'
 " Plug 'vim-scripts/CSApprox'
 " Plug 'vim-scripts/L9'
+" Plug 'zenorocha/dracula-theme', { 'rtp':  'vim' }
 call plug#end()
 " *** END PLUG SETUP ***
 
@@ -104,7 +106,7 @@ syntax enable
 " colorscheme solarized
 set background=dark
 if has("gui_running")
-    colorscheme Benokai
+    colorscheme base16-atelierseaside
     set ghr=0
     set guioptions-=m  "menu bar
     set guioptions-=T  "toolbar
@@ -112,7 +114,7 @@ if has("gui_running")
     set guioptions-=L  "scrollbar
 
     " Gvim fonts
-    " set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 10
+    " set guifont=Source\ Code\ Pro\ for\ Powerline\ Medium\ 11
     set guifont=Inconsolata-g\ for\ Powerline\ Medium\ 11
 
     " Gvim terminal Cursor Block
@@ -224,12 +226,15 @@ imap <C-i> <Plug>snipMateNextOrTrigger
 " *** SYNTASTIC CONFIG ***
 let g:syntastic_enable_signs = 1
 let g:syntastic_auto_loc_list=1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -Wall'
 let g:syntastic_javascript_checkers = ['jshint']
-let g:syntastic_python_checkers = ['pyflakes']
+" let g:syntastic_python_checkers = ['pyflakes']
 " use :Errors and :lclose
-" let g:syntastic_auto_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+" disabling docstring message from pylint
+let g:syntastic_python_pylint_post_args='--disable=C0111'
+let g:syntastic_check_on_wq = 0
 
 
 " *** VIM FOLDING SETTINGS ***
@@ -283,6 +288,19 @@ noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
 
+" *** SNIPMATE SETTINGS ***
+" remapping for YCM
+imap jj <esc>a<Plug>snipMateNextOrTrigger
+smap jj <Plug>snipMateNextOrTrigger
+
+
+" *** YouCompleteMe SETTINGS ***
+" $> apt-get install vim
+" $> apt-get install vim-youcompleteme
+" $> apt-get install vim-addon-manager
+" $> vam install youcompleteme
+let g:ycm_key_list_previous_completion = ['<C-TAB>', '<Up>']
+
 " *** FIXES ***
 
 " Fix themes putting underline for href's
@@ -334,3 +352,5 @@ imap {{ {{}}<Esc>hi
 " " Konsole
 " let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 " let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+
